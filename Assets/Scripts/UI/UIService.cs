@@ -12,8 +12,6 @@ namespace ServiceLocator.UI
     public class UIService : MonoBehaviour
     {
         [SerializeField] private EventService eventService;
-        [SerializeField] private WaveService waveService;
-        [SerializeField] private PlayerService playerService;
 
         [Header("Gameplay Panel")]
         [SerializeField] private GameObject gameplayPanel;
@@ -41,9 +39,26 @@ namespace ServiceLocator.UI
         [SerializeField] private Button quitButton;
 
 
+        public static UIService Instance { get; private set; }
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this.gameObject);
+                Debug.LogError("Trying to create multiple instances of UIService singleton class!!");
+            }
+        }
+
+
+
+
         private void Start()
         {
-            monkeySelectionController = new MonkeySelectionUIController(playerService, cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
+            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
             MonkeySelectionPanel.SetActive(false);
             monkeySelectionController.SetActive(false);
 
@@ -71,7 +86,7 @@ namespace ServiceLocator.UI
 
         private void OnNextWaveButton()
         {
-            waveService.StarNextWave();
+            WaveService.Instance.StarNextWave();
             SetNextWaveButton(false);
         }
 
