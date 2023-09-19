@@ -29,11 +29,12 @@ public class GameService : GenericMonoSingleton<GameService>
 
     private void Start()
     {
+        eventService = new EventService();
         playerService = new PlayerService(playerScriptableObject);
         soundService = new SoundService(soundScriptableObject,audioEffects,backgroundMusic);
         waveService = new WaveService(waveScriptableObject);
         mapService = new MapService(mapScriptableObject);
-        eventService = new EventService();
+        
     }
 
     private void Update()
