@@ -41,7 +41,6 @@ namespace ServiceLocator.Main
         private void Init()
         {
             EventService = new EventService();
-            UIService.SubscribeToEvents();
             MapService = new MapService(mapScriptableObject);
             WaveService = new WaveService(waveScriptableObject);
             SoundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
@@ -53,6 +52,7 @@ namespace ServiceLocator.Main
             PlayerService.Init(uiService, MapService, SoundService);
             WaveService.Init(EventService, MapService, SoundService,UIService);
             MapService.Init(EventService);
+            UIService.Init(EventService, WaveService);
         }
 
         private void Update()
